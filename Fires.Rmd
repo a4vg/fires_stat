@@ -1,0 +1,295 @@
+---
+title: "Incendios en EEUU: Causas de incendios a través de los años"
+author: "Arturo Cuya, Camila Fernandez, Andrea Velasquez y Alessia Yi"
+output:
+  prettydoc::html_pretty:
+    theme: leonids
+    highlight: github
+params:
+  encoding: "UTF-8"
+---
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+reqpackages <- c("prettydoc", "plyr", "dplyr")
+newpackages <- reqpackages[!(reqpackages %in% installed.packages()[,"Package"])]
+if(length(newpackages)) install.packages(pkgs=newpackages, repos = "http://cran.us.r-project.org")
+```
+
+##Justificación del tema
+<div style="text-align: justify">
+Los incendios en Estados Unidos son muy comunes y a menudo conducen a muertes. [En el 2016, 3390 personas fallecieron a causa de incendios](https://www.statista.com/statistics/376703/us-civilian-fire-deaths/). Algunos de los factores que contribuyen a la dispersión del fuego son la [cantidad de hogares prefabricados con madera, los numerosos bosques que tiene cada estado, el clima seco y las temperaturas altas](https://www.statista.com/statistics/376703/us-civilian-fire-deaths/). </br>
+Se han realizado numerosos estudios anuales sobre las causas de incendios, de los cuales [la mayoría se encuentra centrado únicamente en incendios forestales](https://www.iii.org/fact-statistic/facts-statistics-wildfires). En la actualidad, no hay un estudio que describa todos los tipos de causas de incendios en EEUU a través de un amplio rango de tiempo. La mayor fuente de información sobre incendios, el USFA (Administración de Incendios de Estados Unidos), [provee de datos organizados en gráficos](https://www.usfa.fema.gov/data/statistics/#tab-3) sobre la cantidad de incendios, víctimas y la pérdida de propiedad, así como sus tendencias. Incluso recolecta de datos tabulados en informes publicados [aquí](https://www.usfa.fema.gov/data/statistics/order_download_data.html#download). Sin embargo, los datos se agrupan en tipo de propiedad y se enfocan en la pérdida de propiedad. Lo más cercano a una agrupación por causas se encuentra evaluado tan solo en dos años separados ( [2011](https://www.usfa.fema.gov/downloads/xls/statistics/us_fire_loss_data_sets_2000-2011.xlsx) y [2015](https://www.usfa.fema.gov/downloads/xls/statistics/us_fire_loss_data_sets_2006-2015.xlsx)) y las razones detrás de los datos no han sido analizadas. Como un segundo ejemplo, tenemos también al NFPA (Asociación Nacional de Protección contra Incendios), que publica distintos reportes sobre incendios. De estos podemos resaltar [uno de los más completos realizado en el 2017 sobre incendios en casas](https://www.nfpa.org/-/media/Files/News-and-Research/Fire-statistics-and-reports/Building-and-life-safety/osHomes.pdf) y donde podemos observar que únicamente se encuentran las causas principales en el periodo conjunto del 2011 al 2015 (pg. 8).
+Nuestra propuesta es analizar los incendios desde el 2010 hasta el 2014, estudiar sus causas e intentar averiguar por qué algunas causas prevalecen y otras dejan de ser comunes.
+</div>
+
+##Objetivos
+1. Usar la estadística para comprender las causas de incendios en EEUU en diferentes estados.
+2. Comparar grandes cantidades de datos a lo largo de la historia.
+3. Brindar información útil para la Administración de Incendios de Estados Unidos(USFA) sobre sus incendios con esperanza de brindar un mejor entendimiento y, de esa manera, prevenir accidentes.
+4. Tener un informe amigable y conciso para concientizar a las diferentes entidades interesadas.
+
+
+##Variables
+* Cualitativas:
+    + Nominal: State,  Fire Dept. ID, Cause Code, Incident Date 
+    + Ordinal: General Cause Category,  Primary Cause Category
+* Cuantitativas:
+    + Discretas: Exposure No., victims
+    + Continua: Tiempo
+
+##Unidades muestrales
+* Población objetivo: Incendios reportados por el National Fire Incident Reporting System en el 2010, 2012 y 2014.
+* Unidad muestral: Incendio registrado en el National Fire Incident Reporting System.
+* Tipo de muestreo: No hay, es un parámetro estadístico ya que toda la data es sacada del National Fire Incident Reporting System (NFIRS) de los Estados Unidos. Si bien la participación no es obligatoria para algunos estados, los set de data referenciados en este proyecto sí incluyen todos los 50 estados con más de dos tercios de participación de los departamentos de bomberos a nivel nacional (pg.4). La Administración de Incendios de Estados Unidos (USFA) considera que el NFIRS contiene la cantidad suficiente de información que se necesita para hacer estimados razonables de las varias facetas de un problema de fuego (pg.4) [https://www.usfa.fema.gov/downloads/pdf/publications/nfirs_data_quality_report.pdf].
+
+
+##Planificación
+<div style="text-align: justify">
+Las primeras semanas nos centraremos en el planteamiento inicial, es decir, la construcción de la pregunta a la que orientaremos nuestro proyecto, la hipótesis y reconocimiento de variables. Lo anterior se realizará con el conocimiento obtenido de una breve investigación previa, para evitar que la base de nuestro proyecto se encuentre completamente desviada del tema. En la siguiente etapa se trabajará en el procesamiento: la recolección, validación y creación de gráficos. La programación con R y R Markdown será fundamental por su capacidad en la manipulación de datos y edición del documento. Lo siguiente será interpretar los datos y plantearse preguntas que estos levanten. A partir de ello podremos reconocer tendencias y relaciones entre datos. Por último, se realizará una revisión de la hipótesis y responderán las preguntas.
+</div>
+
+![En el diagrama de Gantt puede verse la planificación con mayor detalle.](img/Gantt.png)
+
+##Fuente de datos
+<div style="text-align: justify">
+Los datos serán recolectados del repositorio de datos Enigma Public[https://public.enigma.com/browse/77c6597b-eb82-4a2f-9d2e-5aedea1cae1d], específicamente de la sección National Fire Incident Reporting System - Causes, en donde se pueden encontrar tablas para cada año desde 2010 hasta 2014. Cada una de las tablas contiene información sobre los incendios ocurridos en ese año. Las columnas principales son:
+</div>
+
+* State: El estado donde ocurrió el incendio
+* Fire Dept. ID: El identificador del departamento de bomberos que atendió el incendio
+* Incident Date: La fecha del incendio
+* Incident No.: El número del incidente
+* Exposure No.: El número de la exposición (un incendio que resulta de otro incendio)
+* Primary Cause Category
+* Cause Code
+* General Cause Category
+
+
+<div style="text-align: justify">
+
+Cada causa tiene un Primary Cause Category y un Cause Code, que son números enteros. El significado de cada uno de estos códigos puede ser extraído de la documentación[https://www.usfa.fema.gov/data/nfirs/support/documentation.html] de la web del National Fire Incident Reporting System en la sección **Structure Fire Cause Matrix**
+</div>
+
+##Preguntas de investigación
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Upload csv
+causes_2010 <- read.csv(file="data/Causes2010_cleaned.csv")
+causes_2012 <- read.csv(file="data/Causes2012_cleaned.csv")
+causes_2014 <- read.csv(file="data/Causes2014_cleaned.csv")
+
+```
+
+###Preguntas descriptivas
+
+####¿Cuál es el porcentaje de cada causa de incendios por año?
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+barplot(prop.table(table(causes_2010$cause_code)), col=c("gold", "darkorchid"), ylim=c(0,0.5), main = "Porcentaje de Causas en el 2010", ylab="Frecuencia Relativa")
+
+barplot(prop.table(table(causes_2012$cause_code)), col=c("deeppink", "chartreuse2"), ylim=c(0,0.5), main = "Porcentaje de Causas en el 2012", ylab="Frecuencia Relativa")
+
+barplot(prop.table(table(causes_2014$cause_code)), col=c("orange", "deepskyblue"), ylim=c(0,0.5), main = "Porcentaje de Causas en el 2014", ylab="Frecuencia Relativa")
+
+```
+
+####¿Cuál es el mes con menos incendios por año?
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+month_count2010 <- aggregate(cbind(count = substr(causes_2010$inc_date, 1, 2)) ~ substr(causes_2010$inc_date, 1, 2), data = causes_2010, FUN = function(x){NROW(x)})
+colnames(month_count2010) <- c("month", "count")
+
+min2010 <- min(month_count2010$count)
+month_count2010[month_count2010$count %in% min2010,]
+month_count2012 <- aggregate(cbind(count = substr(causes_2012$inc_date, 1, 2)) ~ substr(causes_2012$inc_date, 1, 2), data = causes_2012, FUN = function(x){NROW(x)})
+colnames(month_count2012) <- c("month", "count")
+
+min2012 <- min(month_count2012$count)
+month_count2012[month_count2012$count %in% min2012,]
+month_count2014 <- aggregate(cbind(count = substr(causes_2014$inc_date, 1, 2)) ~ substr(causes_2014$inc_date, 1, 2), data = causes_2014, FUN = function(x){NROW(x)})
+colnames(month_count2014) <- c("month", "count")
+
+min2014 <- min(month_count2014$count)
+month_count2014[month_count2014$count %in% min2014,]
+```
+
+####¿Cuál es la causa más común que ocasionan los incendios por estado en el año 2010?
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+
+x <- causes_2010%>%
+  count(state, pcc, cause_code, gcc) %>%
+  group_by(state) %>%
+  filter(n == max(n))
+
+data.frame(x)
+
+```
+
+###Preguntas exploratorias
+#### ¿La población de las ciudades está relacionada con el índice de incendios por humo? 
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(plyr)
+
+#Causes 2010 --------------------
+ct <- count(causes_2010, "state")
+
+CAT <- ct[ct$state %in% "CA",]
+CAT1 <- CAT$freq
+TXT <- ct[ct$state %in% "TX",]
+TXT1 <- TXT$freq
+NYT <- ct[ct$state %in% "NY",]
+NYT1 <- NYT$freq
+
+VTT <- ct[ct$state %in% "VT",]
+VTT1 <- VTT$freq
+WAT <- ct[ct$state %in% "WA",]
+WAT1 <- WAT$freq
+WYT <- ct[ct$state %in% "WY",]
+WYT1 <- WYT$freq
+
+
+c_c9 <- causes_2010[causes_2010$cause_code==9,]
+cc <- count(c_c9, "state")
+CA <- cc[cc$state %in% "CA",]
+CA1 <- CA$freq
+TX <- cc[cc$state %in% "TX",]
+TX1 <- TX$freq
+NY <- cc[cc$state %in% "NY",]
+NY1 <- NY$freq
+
+VT <- cc[cc$state %in% "VT",]
+VT1 <- VT$freq
+WA <- cc[cc$state %in% "WA",]
+WA1 <- WA$freq
+WY <- cc[cc$state %in% "WY",]
+WY1 <- WY$freq
+
+vh <- c(CA1/CAT1,TX1/TXT1,NY1/NYT1,VT1/VTT1,WA1/WAT1,WY1/WYT1)
+
+barplot(vh,names.arg=c("CA", "TX", "NY", "VT", "WA", "WY"), main = "2010")
+
+
+#Causes 2012 --------------------
+ct <- count(causes_2012, "state")
+
+CAT <- ct[ct$state %in% "CA",]
+CAT1 <- CAT$freq
+TXT <- ct[ct$state %in% "TX",]
+TXT1 <- TXT$freq
+NYT <- ct[ct$state %in% "NY",]
+NYT1 <- NYT$freq
+
+VTT <- ct[ct$state %in% "VT",]
+VTT1 <- VTT$freq
+WAT <- ct[ct$state %in% "WA",]
+WAT1 <- WAT$freq
+WYT <- ct[ct$state %in% "WY",]
+WYT1 <- WYT$freq
+
+
+c_c9 <- causes_2012[causes_2012$cause_code==9,]
+cc <- count(c_c9, "state")
+CA <- cc[cc$state %in% "CA",]
+CA1 <- CA$freq
+TX <- cc[cc$state %in% "TX",]
+TX1 <- TX$freq
+NY <- cc[cc$state %in% "NY",]
+NY1 <- NY$freq
+
+VT <- cc[cc$state %in% "VT",]
+VT1 <- VT$freq
+WA <- cc[cc$state %in% "WA",]
+WA1 <- WA$freq
+WY <- cc[cc$state %in% "WY",]
+WY1 <- WY$freq
+
+vh <- c(CA1/CAT1,TX1/TXT1,NY1/NYT1,VT1/VTT1,WA1/WAT1,WY1/WYT1)
+
+barplot(vh,names.arg=c("CA", "TX", "NY", "VT", "WA", "WY"), main = "2012")
+
+
+#Causes 2014 --------------------
+ct <- count(causes_2014, "state")
+
+CAT <- ct[ct$state %in% "CA",]
+CAT1 <- CAT$freq
+TXT <- ct[ct$state %in% "TX",]
+TXT1 <- TXT$freq
+NYT <- ct[ct$state %in% "NY",]
+NYT1 <- NYT$freq
+
+VTT <- ct[ct$state %in% "VT",]
+VTT1 <- VTT$freq
+WAT <- ct[ct$state %in% "WA",]
+WAT1 <- WAT$freq
+WYT <- ct[ct$state %in% "WY",]
+WYT1 <- WYT$freq
+
+
+c_c9 <- causes_2014[causes_2014$cause_code==9,]
+cc <- count(c_c9, "state")
+CA <- cc[cc$state %in% "CA",]
+CA1 <- CA$freq
+TX <- cc[cc$state %in% "TX",]
+TX1 <- TX$freq
+NY <- cc[cc$state %in% "NY",]
+NY1 <- NY$freq
+
+VT <- cc[cc$state %in% "VT",]
+VT1 <- VT$freq
+WA <- cc[cc$state %in% "WA",]
+WA1 <- WA$freq
+WY <- cc[cc$state %in% "WY",]
+WY1 <- WY$freq
+
+vh <- c(CA1/CAT1,TX1/TXT1,NY1/NYT1,VT1/VTT1,WA1/WAT1,WY1/WYT1)
+
+barplot(vh,names.arg=c("CA", "TX", "NY", "VT", "WA", "WY"), main = "2014")
+
+
+```
+
+####¿La cantidad de incendios por fuegos artificiales está relacionada con los [días festivos](https://www.redcort.com/us-federal-bank-holidays/)? 
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Holidays (formated as month/day)
+holidays <-c("101", "115", "219", "528", "704", "903", "1008", "1112", "1122", "1225")
+
+# All incidences with pcc = 7 (Fireworks)
+c_2010_allFw <- subset(causes_2010, pcc == 7)
+causes_2010_fwAtHolid <- subset(c_2010_allFw, grepl(paste(holidays,collapse="|"), inc_date))
+
+c_2012_allFw <- subset(causes_2012, pcc == 7)
+causes_2012_fwAtHolid <- subset(c_2012_allFw, grepl(paste(holidays,collapse="|"), inc_date))
+
+c_2014_allFw <- subset(causes_2014, pcc == 7)
+causes_2014_fwAtHolid <- subset(c_2014_allFw, grepl(paste(holidays,collapse="|"), inc_date))
+
+num_fw <- sum(nrow(c_2010_allFw), nrow(c_2012_allFw), nrow(c_2014_allFw))
+num_fw_hol <- sum(nrow(causes_2010_fwAtHolid), nrow(causes_2012_fwAtHolid), nrow(causes_2014_fwAtHolid))
+
+perc <- num_fw_hol / num_fw * 100
+
+print("Porcentaje de incidentes con fuegos artificiales que ocurrieron en feriados vs todos los incidentes con fuegos artificiales: ", quote = FALSE)
+print(perc)
+```
+**Conclusión**: Que sea un día festivo no está relacionado con los incendios por fuegos artificiales, pues solo un tercio de estos ocurren en días festivos.
+
+###Preguntas Inferenciales
+####¿Mientras mayor población hay más incendios ocasionados?
+
+###Preguntas Causales
+####¿El factor más influyente de la provocaciones de incendios se debe a la actividad humana?
+
+###Preguntas Predictivas
+####¿Si se el número de estaciones de bomberos aumentan cuál sería el comportamiento del _exposure number_, y del número de incendios?
+
+###Preguntas Mecanísticas
+####¿Cómo afectan las estaciones a la provocación de incendios?
+
+
+##Bibliografía adicional
+* https://www.earth.com/news/wildfires-western-united-states/
+* https://www.theguardian.com/world/2018/aug/12/wildfires-more-than-100-us-six-new-blazes-erupt
+* https://www.iii.org/fact-statistic/facts-statistics-wildfires
+* https://www.statista.com/statistics/376703/us-civilian-fire-deaths/
