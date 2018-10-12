@@ -17,15 +17,17 @@ if(length(newpackages)) install.packages(pkgs=newpackages, repos = "http://cran.
 
 ##Justificación del tema
 <div style="text-align: justify">
-Los incendios en Estados Unidos son muy comunes y a menudo conducen a muertes. [En el 2016, 3390 personas fallecieron a causa de incendios](https://www.statista.com/statistics/376703/us-civilian-fire-deaths/). Algunos de los factores que contribuyen a la dispersión del fuego son la [cantidad de hogares prefabricados con madera, los numerosos bosques que tiene cada estado, el clima seco y las temperaturas altas](https://www.statista.com/statistics/376703/us-civilian-fire-deaths/). </br>
-Se han realizado numerosos estudios anuales sobre las causas de incendios, de los cuales [la mayoría se encuentra centrado únicamente en incendios forestales](https://www.iii.org/fact-statistic/facts-statistics-wildfires). En la actualidad, no hay un estudio que describa todos los tipos de causas de incendios en EEUU a través de un amplio rango de tiempo. La mayor fuente de información sobre incendios, el USFA (Administración de Incendios de Estados Unidos), [provee de datos organizados en gráficos](https://www.usfa.fema.gov/data/statistics/#tab-3) sobre la cantidad de incendios, víctimas y la pérdida de propiedad, así como sus tendencias. Incluso recolecta de datos tabulados en informes publicados [aquí](https://www.usfa.fema.gov/data/statistics/order_download_data.html#download). Sin embargo, los datos se agrupan en tipo de propiedad y se enfocan en la pérdida de propiedad. Lo más cercano a una agrupación por causas se encuentra evaluado tan solo en dos años separados ( [2011](https://www.usfa.fema.gov/downloads/xls/statistics/us_fire_loss_data_sets_2000-2011.xlsx) y [2015](https://www.usfa.fema.gov/downloads/xls/statistics/us_fire_loss_data_sets_2006-2015.xlsx)) y las razones detrás de los datos no han sido analizadas. Como un segundo ejemplo, tenemos también al NFPA (Asociación Nacional de Protección contra Incendios), que publica distintos reportes sobre incendios. De estos podemos resaltar [uno de los más completos realizado en el 2017 sobre incendios en casas](https://www.nfpa.org/-/media/Files/News-and-Research/Fire-statistics-and-reports/Building-and-life-safety/osHomes.pdf) y donde podemos observar que únicamente se encuentran las causas principales en el periodo conjunto del 2011 al 2015 (pg. 8).
+Los incendios en Estados Unidos son muy comunes y a menudo conducen a muertes. [En el 2016, 3390 personas fallecieron a causa de ellos](https://www.statista.com/statistics/376703/us-civilian-fire-deaths/). Algunos de los factores que contribuyen a la dispersión del fuego son la [cantidad de hogares prefabricados con madera, los numerosos bosques que tiene cada estado, el clima seco y las temperaturas altas](https://www.statista.com/statistics/376703/us-civilian-fire-deaths/). </br>
+Se han realizado numerosos estudios anuales sobre las causas de incendios, de los cuales [la mayoría se encuentra centrada únicamente en incendios forestales](https://www.iii.org/fact-statistic/facts-statistics-wildfires). En la actualidad, no hay un estudio que describa todos los tipos de causas de incendios en EEUU a través de un amplio rango de tiempo. La mayor fuente de información sobre incendios, el USFA (Administración de Incendios de Estados Unidos), [provee de datos organizados en gráficos](https://www.usfa.fema.gov/data/statistics/#tab-3) sobre la cantidad de incendios, víctimas y la pérdida de propiedad, así como sus tendencias. Incluso brinda datos tabulados en informes publicados [aquí](https://www.usfa.fema.gov/data/statistics/order_download_data.html#download). Sin embargo, los datos se agrupan en tipo de propiedad y se enfocan en la pérdida de propiedad. Lo más cercano a una agrupación por causas se encuentra evaluado tan solo en dos años separados ( [2011](https://www.usfa.fema.gov/downloads/xls/statistics/us_fire_loss_data_sets_2000-2011.xlsx) y [2015](https://www.usfa.fema.gov/downloads/xls/statistics/us_fire_loss_data_sets_2006-2015.xlsx)) y las razones detrás de los datos no han sido analizadas. Como un segundo ejemplo, tenemos también al NFPA (Asociación Nacional de Protección contra Incendios), que publica distintos reportes sobre incendios. De estos podemos resaltar uno de los más completos, realizado en el 2017, sobre incendios en casas y donde podemos observar que únicamente se encuentran las causas principales en el periodo conjunto del 2011 al 2015 [pg. 8](https://www.nfpa.org/-/media/Files/News-and-Research/Fire-statistics-and-reports/Building-and-life-safety/osHomes.pdf).
 Nuestra propuesta es analizar los incendios desde el 2010 hasta el 2014, estudiar sus causas e intentar averiguar por qué algunas causas prevalecen y otras dejan de ser comunes.
+
+**Público objetivo:** Entidades relacionadas a incendios
 </div>
 
 ##Objetivos
 1. Usar la estadística para comprender las causas de incendios en EEUU en diferentes estados.
 2. Comparar grandes cantidades de datos a lo largo de la historia.
-3. Brindar información útil para la Administración de Incendios de Estados Unidos(USFA) sobre sus incendios con esperanza de brindar un mejor entendimiento y, de esa manera, prevenir accidentes.
+3. Brindar información útil para la Administración de Incendios de Estados Unidos (USFA) sobre sus incendios con esperanza de brindar un mejor entendimiento y, de esa manera, prevenir accidentes.
 4. Tener un informe amigable y conciso para concientizar a las diferentes entidades interesadas.
 
 
@@ -34,13 +36,13 @@ Nuestra propuesta es analizar los incendios desde el 2010 hasta el 2014, estudia
     + Nominal: State,  Fire Dept. ID, Cause Code, Incident Date 
     + Ordinal: General Cause Category,  Primary Cause Category
 * Cuantitativas:
-    + Discretas: Exposure No., victims
-    + Continua: Tiempo
+    + Discretas: Exposure No., deaths
+    + Continua: Tiempo, alarm time, arrival time, property loss
 
 ##Unidades muestrales
 * Población objetivo: Incendios reportados por el National Fire Incident Reporting System en el 2010, 2012 y 2014.
 * Unidad muestral: Incendio registrado en el National Fire Incident Reporting System.
-* Tipo de muestreo: No hay, es un parámetro estadístico ya que toda la data es sacada del National Fire Incident Reporting System (NFIRS) de los Estados Unidos. Si bien la participación no es obligatoria para algunos estados, los set de data referenciados en este proyecto sí incluyen todos los 50 estados con más de dos tercios de participación de los departamentos de bomberos a nivel nacional (pg.4). La Administración de Incendios de Estados Unidos (USFA) considera que el NFIRS contiene la cantidad suficiente de información que se necesita para hacer estimados razonables de las varias facetas de un problema de fuego (pg.4) [https://www.usfa.fema.gov/downloads/pdf/publications/nfirs_data_quality_report.pdf].
+* Tipo de muestreo: No hay, es un parámetro estadístico ya que toda la data es sacada del National Fire Incident Reporting System (NFIRS) de los Estados Unidos. Si bien la participación no es obligatoria para algunos estados, los set de data referenciados en este proyecto sí incluyen todos los 50 estados con más de dos tercios de participación de los departamentos de bomberos a nivel nacional (pg.4). La Administración de Incendios de Estados Unidos (USFA) considera que el NFIRS contiene la cantidad suficiente de información que se necesita para hacer estimados razonables de las varias facetas de un problema de fuego [pg.4](https://www.usfa.fema.gov/downloads/pdf/publications/nfirs_data_quality_report.pdf).
 
 
 ##Planificación
@@ -52,7 +54,7 @@ Las primeras semanas nos centraremos en el planteamiento inicial, es decir, la c
 
 ##Fuente de datos
 <div style="text-align: justify">
-Los datos serán recolectados del repositorio de datos Enigma Public[https://public.enigma.com/browse/77c6597b-eb82-4a2f-9d2e-5aedea1cae1d], específicamente de la sección National Fire Incident Reporting System - Causes, en donde se pueden encontrar tablas para cada año desde 2010 hasta 2014. Cada una de las tablas contiene información sobre los incendios ocurridos en ese año. Las columnas principales son:
+Los datos serán recolectados del repositorio de datos [Enigma Public](https://public.enigma.com/browse/77c6597b-eb82-4a2f-9d2e-5aedea1cae1d), específicamente de la sección National Fire Incident Reporting System - Causes, en donde se pueden encontrar tablas para cada año desde 2010 hasta 2014. Cada una de las tablas contiene información sobre los incendios ocurridos en ese año. Las columnas principales son:
 </div>
 
 * State: El estado donde ocurrió el incendio
@@ -67,7 +69,7 @@ Los datos serán recolectados del repositorio de datos Enigma Public[https://pub
 
 <div style="text-align: justify">
 
-Cada causa tiene un Primary Cause Category y un Cause Code, que son números enteros. El significado de cada uno de estos códigos puede ser extraído de la documentación[https://www.usfa.fema.gov/data/nfirs/support/documentation.html] de la web del National Fire Incident Reporting System en la sección **Structure Fire Cause Matrix**
+Cada causa tiene un Primary Cause Category y un Cause Code, que son números enteros. El significado de cada uno de estos códigos puede ser extraído de la [documentación](https://www.usfa.fema.gov/data/nfirs/support/documentation.html) de la web del National Fire Incident Reporting System en la sección **Structure Fire Cause Matrix**
 </div>
 
 ##Preguntas de investigación
@@ -251,27 +253,36 @@ barplot(vh,names.arg=c("CA", "TX", "NY", "VT", "WA", "WY"), main = "2014")
 ```
 
 ####¿La cantidad de incendios por fuegos artificiales está relacionada con los [días festivos](https://www.redcort.com/us-federal-bank-holidays/)? 
+###Proporción de incendios por fuegos artificales durante festividades
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-# Holidays (formated as month/day)
+#Holidays (formated as month/day)
 holidays <-c("101", "115", "219", "528", "704", "903", "1008", "1112", "1122", "1225")
 
 # All incidences with pcc = 7 (Fireworks)
 c_2010_allFw <- subset(causes_2010, pcc == 7)
-causes_2010_fwAtHolid <- subset(c_2010_allFw, grepl(paste(holidays,collapse="|"), inc_date))
+c_2010_fwAtHolid <- subset(c_2010_allFw, grepl(paste(holidays,collapse="|"), inc_date))
 
 c_2012_allFw <- subset(causes_2012, pcc == 7)
-causes_2012_fwAtHolid <- subset(c_2012_allFw, grepl(paste(holidays,collapse="|"), inc_date))
+c_2012_fwAtHolid <- subset(c_2012_allFw, grepl(paste(holidays,collapse="|"), inc_date))
 
 c_2014_allFw <- subset(causes_2014, pcc == 7)
-causes_2014_fwAtHolid <- subset(c_2014_allFw, grepl(paste(holidays,collapse="|"), inc_date))
+c_2014_fwAtHolid <- subset(c_2014_allFw, grepl(paste(holidays,collapse="|"), inc_date))
 
 num_fw <- sum(nrow(c_2010_allFw), nrow(c_2012_allFw), nrow(c_2014_allFw))
-num_fw_hol <- sum(nrow(causes_2010_fwAtHolid), nrow(causes_2012_fwAtHolid), nrow(causes_2014_fwAtHolid))
+num_fw_hol <- sum(nrow(c_2010_fwAtHolid), nrow(c_2012_fwAtHolid), nrow(c_2014_fwAtHolid))
 
 perc <- num_fw_hol / num_fw * 100
 
-print("Porcentaje de incidentes con fuegos artificiales que ocurrieron en feriados vs todos los incidentes con fuegos artificiales: ", quote = FALSE)
+print("Percentage of firework incidences that ocurred on holidays vs all firework incidences: ", quote = FALSE)
 print(perc)
+
+total <- nrow(c_2010_allFw)
+holiday <- nrow(c_2010_fwAtHolid)
+Otos <- total - holiday
+
+vh <- c(holiday/total, Otos/total)
+
+barplot(vh,names.arg=c("festividades", "no festividades"))
 ```
 **Conclusión**: Que sea un día festivo no está relacionado con los incendios por fuegos artificiales, pues solo un tercio de estos ocurren en días festivos.
 
