@@ -75,10 +75,16 @@ Cada causa tiene un Primary Cause Category y un Cause Code, que son números ent
 ##Preguntas de investigación
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
+formatdate <- function(filename){
+  thefile <- read.csv(filename)
+  thefile$inc_date[nchar(thefile$inc_date)==7] <-paste("0", thefile$inc_date[nchar(thefile$inc_date)==7], sep="")
+  return(thefile[rowSums(is.na(thefile)) == 0,])
+}
+
 # Upload csv
-causes_2010 <- read.csv(file="data/Causes2010_cleaned.csv")
-causes_2012 <- read.csv(file="data/Causes2012_cleaned.csv")
-causes_2014 <- read.csv(file="data/Causes2014_cleaned.csv")
+causes_2010 <- formatdate(file="data/Causes2010_cleaned.csv")
+causes_2012 <- formatdate(file="data/Causes2012_cleaned.csv")
+causes_2014 <- formatdate(file="data/Causes2014_cleaned.csv")
 
 ```
 
@@ -273,9 +279,6 @@ num_fw_hol <- sum(nrow(c_2010_fwAtHolid), nrow(c_2012_fwAtHolid), nrow(c_2014_fw
 
 perc <- num_fw_hol / num_fw * 100
 
-print("Percentage of firework incidences that ocurred on holidays vs all firework incidences: ", quote = FALSE)
-print(perc)
-
 total <- nrow(c_2010_allFw)
 holiday <- nrow(c_2010_fwAtHolid)
 Otos <- total - holiday
@@ -284,7 +287,7 @@ vh <- c(holiday/total, Otos/total)
 
 barplot(vh,names.arg=c("festividades", "no festividades"))
 ```
-**Conclusión**: Que sea un día festivo no está relacionado con los incendios por fuegos artificiales, pues solo un tercio de estos ocurren en días festivos.
+**Conclusión**: Que sea un día festivo no está relacionado con los incendios por fuegos artificiales, pues la proporción de incendios por fuegos artificiales es más alta durante los días no festivos.
 
 ###Preguntas Inferenciales
 ####¿Mientras mayor población hay más incendios ocasionados?
