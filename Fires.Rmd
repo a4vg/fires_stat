@@ -122,16 +122,16 @@ df_2010 = data.frame(cause=xrange, perc=yrange_2010)
 df_2012 = data.frame(cause=xrange, perc=yrange_2012)
 df_2014 = data.frame(cause=xrange, perc=yrange_2014)
 
-ggplot() + geom_line(data=df_2010, aes(x=cause, y=perc, group=1, colour="2010"))  +
-  geom_line(data=df_2012, aes(x=cause, y=perc, group=1, colour="2012")) +
-  geom_line(data=df_2014, aes(x=cause, y=perc, group=1, colour="2014")) +
+ggplot() + geom_point(data=df_2010, aes(x=cause, y=perc, group=1, colour="2010"))  +
+  geom_point(data=df_2012, aes(x=cause, y=perc, group=1, colour="2012")) +
+  geom_point(data=df_2014, aes(x=cause, y=perc, group=1, colour="2014")) +
   scale_x_continuous("Cause", labels = causes, breaks = xrange) +
   scale_y_continuous("Proportion of Cause") +
-  scale_colour_manual("", breaks=c("2010","2012","2014"), values=c("red", "green", "blue")) +
+  scale_colour_manual("", breaks=c("2010","2012","2014"), values=c(rgb(1,0,0,0.4), rgb(0,1,0,0.4), rgb(0,0,1,0.4))) +
   theme(axis.text.x = element_text(angle=45, hjust=1))
 
 ```
-
+Del gráfico anterior se concluye claramente que aproximadamente en el 40% de los incendios reportados la causa es desconocida, aunque esta tendencia disminuye a lo largo de los años. También se observa que las causas menos comunes son jugar con una fuente de calor e incendios causados a propósito (arsons). Por otro lado, a medida que avanza el tiempo, la causa de incendios por cocinar aumenta.
 
 ####¿Cuál es el mes con menos incendios por año?
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
