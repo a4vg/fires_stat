@@ -10,7 +10,7 @@ params:
 ---
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-reqpackages <- c("prettydoc", "plyr", "dplyr")
+reqpackages <- c("prettydoc", "plyr", "dplyr","prettydoc")
 newpackages <- reqpackages[!(reqpackages %in% installed.packages()[,"Package"])]
 if(length(newpackages)) install.packages(pkgs=newpackages, repos = "http://cran.us.r-project.org")
 ```
