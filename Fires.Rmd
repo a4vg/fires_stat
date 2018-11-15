@@ -284,6 +284,8 @@ barplot(vh,names.arg=c("CA", "TX", "NY", "VT", "WA", "WY"), main = "2014")
 
 
 ```
+**Conclusión**: Como podemos ver en las gráficas, no hay una relación visible ya que la diferencia entre los estados más habitados con los menos poblados es muy pequeña.
+
 
 ####¿La cantidad de incendios por fuegos artificiales está relacionada con los [días festivos](https://www.redcort.com/us-federal-bank-holidays/)? 
 ###Proporción de incendios por fuegos artificales durante festividades
