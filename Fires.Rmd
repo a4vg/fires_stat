@@ -100,7 +100,7 @@ formatdate <- function(filename, isGenIn=F){
   thefile <- thefile[rowSums(is.na(thefile)) == 0,]
   thefile$inc_date[nchar(thefile$inc_date)==7] <-paste("0", thefile$inc_date[nchar(thefile$inc_date)==7], sep="")
   thefile$inc_date <- as.Date(thefile$inc_date, format = "%m%d%Y") # as.Date used for dates
-  
+
   if (isGenIn){
     thefile$alarm[nchar(thefile$alarm)==11] <-paste("0", thefile$alarm[nchar(thefile$alarm)==11],sep="")
     thefile$alarm <- as.POSIXct(thefile$alarm, format = "%m%d%Y%H%M") # as.POSIXct used for datetimes
@@ -155,7 +155,6 @@ xrange <- c(1:16)
 yrange_2010 <- c(prop.table(table(causes_2010$cause_code)))
 yrange_2012 <- c(prop.table(table(causes_2012$cause_code)))
 yrange_2014 <- c(prop.table(table(causes_2014$cause_code)))
-# plot(xrange, yrange_2010, type="o")
 
 df_2010 = data.frame(cause=xrange, perc=yrange_2010)
 df_2012 = data.frame(cause=xrange, perc=yrange_2012)
@@ -385,6 +384,7 @@ barplot(vh,names.arg=c("festividades", "no festividades"))
 
 ###Preguntas Predictivas
 ####¿Si se el número de estaciones de bomberos aumentan cuál sería el comportamiento del _exposure number_, y del número de incendios?
+Para responder esto, es necesario hacer una regresión lineal entre el número de estaciones de bomberos y el comportamiento de _exposure number_. Recordar que _exposure number_ representa el número de incendios B, C, D,... ocasionados como daño colateral de un incendio original A. En el modelo lineal, _exposure number_ sería la variable respuesta y el número de estaciones de bomberos la variable predictora. Si la función linear resultara de pendiente negativa, se observaría que el aumento de estaciones de bomberos ocasiona una reducción de los incendios por daño colateral.
 
 ###Preguntas Mecanísticas
 ####¿Cómo afectan las estaciones a la provocación de incendios?
