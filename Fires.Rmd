@@ -388,7 +388,32 @@ barplot(vh,names.arg=c("festividades", "no festividades"))
 </div>
 
 ###Preguntas Inferenciales
-####¿Mientras mayor población hay más incendios ocasionados?
+####¿La mayoría de incendios ocurren en el día(6am-5pm)?
+H0: La mayoría de incendios no ocurren de día
+H1: La mayoría de incendios ocurren de día
+{r}
+dia2010 <- causes_2010[hour(causes_2010$alarm)<17 & hour(causes_2010$alarm)>6,]
+horas2010 <- hour(causes_2010$alarm)
+mu2010 <- mean(horas2010)
+
+dia2012 <- causes_2012[hour(causes_2012$alarm)<17 & hour(causes_2012$alarm)>6,]
+horas2012 <- hour(causes_2012$alarm)
+mu2012 <- mean(horas2012)
+
+dia2014 <- causes_2014[hour(causes_2014$alarm)<17 & hour(causes_2014$alarm)>6,]
+horas2014 <- hour(causes_2014$alarm)
+mu2014 <- mean(horas2014)
+
+mu_total <- (mu2010+mu2012+mu2014)/3
+total_anos <- c(causes_2010,causes_2012,causes_2014)
+total_horas <- hour(total_anos$alarm)
+v <- c(0:23)
+
+t.test(total_horas, mu=mu_total, alternative="greater", conf.level=0.80)
+
+<div>
+*Conclusión*: Ya que p-value vale 0.3101 y nuestro alfa es 0.2, podemos ver que p-value es menor 
+</div>
 
 ###Preguntas Causales
 ####¿El factor más influyente de la provocaciones de incendios se debe a la actividad humana?
