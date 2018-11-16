@@ -94,7 +94,7 @@ Significados de cada Cause Code encontrado en la base de datos:
 
 ##Preguntas de investigación
 
-```{r message=FALSE, warning=FALSE, include=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 formatdate <- function(filename, isGenIn=F){
   thefile <- read.csv(filename, stringsAsFactors = F)
   thefile <- thefile[rowSums(is.na(thefile)) == 0,]
@@ -149,7 +149,7 @@ causes[16] <- "Investigation with Arson Module"
 ###Preguntas descriptivas
 
 ####¿Cuál es el porcentaje de cada causa de incendios por año?
-```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 library(ggplot2)
 xrange <- c(1:16)
 yrange_2010 <- c(prop.table(table(causes_2010$cause_code)))
@@ -227,7 +227,7 @@ paged_table(data.frame(x[c(1,3)]))
 
 ###Preguntas exploratorias
 #### ¿La población de las ciudades está relacionada con el índice de incendios por humo?
-##### Se tomaron los 3 estados más poblados y los 3 estados menos poblados. Información disponible en https://es.wikipedia.org/wiki/Anexo:Estados_de_los_Estados_Unidos_por_poblaci%C3%B3n
+Se tomaron los 3 estados más poblados y los 3 estados menos poblados. Información disponible en https://es.wikipedia.org/wiki/Anexo:Estados_de_los_Estados_Unidos_por_poblaci%C3%B3n
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(plyr)
 
@@ -355,9 +355,10 @@ barplot(vh,names.arg=c("CA", "TX", "NY", "VT", "WA", "WY"), main = "2014", col=c
 
 ###Preguntas Inferenciales
 ####¿La mayoría de incendios ocurren en el día(6am-5pm)?
+
 H0: La mayoría de incendios no ocurren de día
 H1: La mayoría de incendios ocurren de día
-{r}
+```{r}
 dia2010 <- causes_2010[hour(causes_2010$alarm)<17 & hour(causes_2010$alarm)>6,]
 horas2010 <- hour(causes_2010$alarm)
 mu2010 <- mean(horas2010)
@@ -376,9 +377,10 @@ total_horas <- hour(total_anos$alarm)
 v <- c(0:23)
 
 t.test(total_horas, mu=mu_total, alternative="greater", conf.level=0.80)
+```
 
 <div>
-*Conclusión*: Ya que p-value vale 0.3101 y nuestro alfa es 0.2, podemos ver que p-value es menor 
+*Conclusión*: Se rechaza la hipótesis nula, ya que p-value vale 0.155 y nuestro alfa es 0.2. Podemos ver que p-value es menor.
 </div>
 
 ###Preguntas Causales
