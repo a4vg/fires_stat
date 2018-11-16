@@ -82,9 +82,15 @@ formatdate <- function(filename){
 }
 
 # Upload csv
-causes_2010 <- formatdate(file="data/Causes2010_cleaned.csv")
-causes_2012 <- formatdate(file="data/Causes2012_cleaned.csv")
-causes_2014 <- formatdate(file="data/Causes2014_cleaned.csv")
+c_2010 <- formatdate(file="data/Causes2010_cleaned.csv")
+c_2012 <- formatdate(file="data/Causes2012_cleaned.csv")
+c_2014 <- formatdate(file="data/Causes2014_cleaned.csv")
+g_2010 <- formatdate(file="data/GenIn2010_cleaned.csv")
+g_2012 <- formatdate(file="data/GenIn2012_cleaned.csv")
+g_2014 <- formatdate(file="data/GenIn2014_cleaned.csv")
+causes_2010 <- merge(c_2010, g_2010, by= c("fdid", "exp_no", "inc_no"))
+causes_2012 <- merge(c_2012, g_2012, by= c("fdid", "exp_no", "inc_no"))
+causes_2014 <- merge(c_2014, g_2014, by= c("fdid", "exp_no", "inc_no"))
 
 # Initialize causes
 causes <- c()
