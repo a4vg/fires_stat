@@ -94,7 +94,7 @@ Significados de cada Cause Code encontrado en la base de datos:
 
 ##Preguntas de investigación
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, include=FALSE}
 formatdate <- function(filename, isGenIn=F){
   thefile <- read.csv(filename, stringsAsFactors = F)
   thefile <- thefile[rowSums(is.na(thefile)) == 0,]
@@ -149,7 +149,7 @@ causes[16] <- "Investigation with Arson Module"
 ###Preguntas descriptivas
 
 ####¿Cuál es el porcentaje de cada causa de incendios por año?
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 library(ggplot2)
 xrange <- c(1:16)
 yrange_2010 <- c(prop.table(table(causes_2010$cause_code)))
@@ -175,22 +175,31 @@ Del gráfico anterior se concluye claramente que aproximadamente en el 40% de lo
 
 ####¿Cuál es el mes con menos incendios por año?
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(lubridate)
+library(rmarkdown)
 
-month_count2010 <- aggregate(cbind(count = substr(causes_2010$inc_date, 1, 2)) ~ substr(causes_2010$inc_date, 1, 2), data = causes_2010, FUN = function(x){NROW(x)})
+month_count2010 <- aggregate(cbind(count = month(causes_2010$inc_date)) ~ month(causes_2010$inc_date), data = causes_2010, FUN = function(x){NROW(x)})
 colnames(month_count2010) <- c("month", "count")
-
 min2010 <- min(month_count2010$count)
-month_count2010[month_count2010$count %in% min2010,]
-month_count2012 <- aggregate(cbind(count = substr(causes_2012$inc_date, 1, 2)) ~ substr(causes_2012$inc_date, 1, 2), data = causes_2012, FUN = function(x){NROW(x)})
+month_count2010 <- month_count2010[month_count2010$count %in% min2010,]
+month_count2010$month <- month.name[as.integer(month_count2010$month)]
+month_count2010['Year']=2010
+
+month_count2012 <- aggregate(cbind(count = month(causes_2012$inc_date)) ~ month(causes_2012$inc_date), data = causes_2012, FUN = function(x){NROW(x)})
 colnames(month_count2012) <- c("month", "count")
-
 min2012 <- min(month_count2012$count)
-month_count2012[month_count2012$count %in% min2012,]
-month_count2014 <- aggregate(cbind(count = substr(causes_2014$inc_date, 1, 2)) ~ substr(causes_2014$inc_date, 1, 2), data = causes_2014, FUN = function(x){NROW(x)})
-colnames(month_count2014) <- c("month", "count")
+month_count2012 <- month_count2012[month_count2012$count %in% min2012,]
+month_count2012$month <- month.name[as.integer(month_count2012$month)]
+month_count2012['Year']=2012
 
+month_count2014 <- aggregate(cbind(count = month(causes_2014$inc_date)) ~ month(causes_2014$inc_date), data = causes_2014, FUN = function(x){NROW(x)})
+colnames(month_count2014) <- c("month", "count")
 min2014 <- min(month_count2014$count)
-month_count2014[month_count2014$count %in% min2014,]
+month_count2014 <- month_count2014[month_count2014$count %in% min2014,]
+month_count2014$month <- month.name[as.integer(month_count2014$month)]
+month_count2014['Year']=2014
+
+paged_table(rbind(month_count2010, month_count2012, month_count2014))
 ```
 
 ####¿Cuál es la causa más común que ocasionan los incendios por estado en el año 2010?
@@ -212,7 +221,7 @@ x <- causes_2010%>%
 x$cause_code <- causes[strtoi(x$cause_code)]
 names(x)[3] <- "cause"
 
-data.frame(x[c(1,3)])
+paged_table(data.frame(x[c(1,3)]))
 ```
 
 
