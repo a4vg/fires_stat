@@ -1,3 +1,7 @@
 *.html
 .Rhistory
 .RData
+
+.DS_Store
+
+data/
