@@ -42,7 +42,7 @@ Nuestra propuesta es analizar los incendios desde el 2010 hasta el 2014, estudia
 ##Unidades muestrales
 * Población objetivo: Incendios reportados por el National Fire Incident Reporting System en el 2010, 2012 y 2014.
 * Unidad muestral: Incendio registrado en el National Fire Incident Reporting System.
-* Tipo de muestreo: No hay, es un parámetro estadístico ya que toda la data es sacada del National Fire Incident Reporting System (NFIRS) de los Estados Unidos. Si bien la participación no es obligatoria para algunos estados, los set de data referenciados en este proyecto sí incluyen todos los 50 estados con más de dos tercios de participación de los departamentos de bomberos a nivel nacional (pg.4). La Administración de Incendios de Estados Unidos (USFA) considera que el NFIRS contiene la cantidad suficiente de información que se necesita para hacer estimados razonables de las varias facetas de un problema de fuego [pg.4](https://www.usfa.fema.gov/downloads/pdf/publications/nfirs_data_quality_report.pdf).
+* Tipo de muestreo: No probabilístico, basado en la disponibilidad del sujeto (incendios). Los datos que tenemos son los incendios que la National Fire Incident Reporting System (NFIRS) de los Estados Unidos pudo registrar. Si bien la participación no es obligatoria para algunos estados, los set de data referenciados en este proyecto sí incluyen todos los 50 estados con más de dos tercios de participación de los departamentos de bomberos a nivel nacional (pg.4). La Administración de Incendios de Estados Unidos (USFA) considera que el NFIRS contiene la cantidad suficiente de información que se necesita para hacer estimados razonables de las varias facetas de un problema de fuego. [(Fuente, página 4)](https://www.usfa.fema.gov/downloads/pdf/publications/nfirs_data_quality_report.pdf).
 
 
 ##Planificación
@@ -70,6 +70,26 @@ Los datos serán recolectados del repositorio de datos [Enigma Public](https://p
 <div style="text-align: justify">
 
 Cada causa tiene un Primary Cause Category y un Cause Code, que son números enteros. El significado de cada uno de estos códigos puede ser extraído de la [documentación](https://www.usfa.fema.gov/data/nfirs/support/documentation.html) de la web del National Fire Incident Reporting System en la sección **Structure Fire Cause Matrix**
+
+Significados de cada Cause Code encontrado en la base de datos:
+<ol>
+<li>Intentional</li>
+<li>Playing with Heat Source</li>
+<li>Smoking</li>
+<li>Heating</li>
+<li>Cooking</li>
+<li>Electrical Malfunction</li>
+<li>Appliances</li>
+<li>Open Flame</li>
+<li>Other Heat</li>
+<li>Other Equipment</li>
+<li>Natural</li>
+<li>Exposure</li>
+<li>Unknown</li>
+<li>Equipment Misoperation / Failure</li>
+<li>Other Unintentional / Careless</li>
+<li>Investigation with Arson Module</li>
+</ol>
 </div>
 
 ##Preguntas de investigación
@@ -150,7 +170,9 @@ ggplot() + geom_point(data=df_2010, aes(x=cause, y=perc, group=1, colour="2010")
   theme(axis.text.x = element_text(angle=45, hjust=1))
 
 ```
+<div>
 Del gráfico anterior se concluye claramente que aproximadamente en el 40% de los incendios reportados la causa es desconocida, aunque esta tendencia disminuye a lo largo de los años. También se observa que las causas menos comunes son jugar con una fuente de calor e incendios causados a propósito (arsons). Por otro lado, a medida que avanza el tiempo, la causa de incendios por cocinar aumenta.
+</div>
 
 ####¿Cuál es el mes con menos incendios por año?
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -317,7 +339,9 @@ barplot(vh,names.arg=c("CA", "TX", "NY", "VT", "WA", "WY"), main = "2014")
 
 
 ```
+<div>
 **Conclusión**: Como podemos ver en las gráficas, no hay una relación visible ya que la diferencia entre los estados más habitados con los menos poblados es muy pequeña.
+</div>
 
 
 ####¿La cantidad de incendios por fuegos artificiales está relacionada con los [días festivos](https://www.redcort.com/us-federal-bank-holidays/)? 
@@ -349,7 +373,9 @@ vh <- c(holiday/total, Otos/total)
 
 barplot(vh,names.arg=c("festividades", "no festividades"))
 ```
+<div>
 **Conclusión**: Que sea un día festivo no está relacionado con los incendios por fuegos artificiales, pues la proporción de incendios por fuegos artificiales es más alta durante los días no festivos.
+</div>
 
 ###Preguntas Inferenciales
 ####¿Mientras mayor población hay más incendios ocasionados?
