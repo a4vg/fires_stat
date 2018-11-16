@@ -353,40 +353,6 @@ barplot(vh,names.arg=c("CA", "TX", "NY", "VT", "WA", "WY"), main = "2014", col=c
 **Conclusión**: Como podemos ver en las gráficas, no hay una relación visible ya que la diferencia entre los estados más habitados con los menos poblados es muy pequeña.
 </div>
 
-
-####¿La cantidad de incendios por fuegos artificiales está relacionada con los [días festivos](https://www.redcort.com/us-federal-bank-holidays/)? 
-###Proporción de incendios por fuegos artificales durante festividades
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-#Holidays (formated as month/day)
-holidays <-c("101", "115", "219", "528", "704", "903", "1008", "1112", "1122", "1225")
-
-# All incidences with pcc = 7 (Fireworks)
-c_2010_allFw <- subset(causes_2010, pcc == 7)
-c_2010_fwAtHolid <- subset(c_2010_allFw, grepl(paste(holidays,collapse="|"), inc_date))
-
-c_2012_allFw <- subset(causes_2012, pcc == 7)
-c_2012_fwAtHolid <- subset(c_2012_allFw, grepl(paste(holidays,collapse="|"), inc_date))
-
-c_2014_allFw <- subset(causes_2014, pcc == 7)
-c_2014_fwAtHolid <- subset(c_2014_allFw, grepl(paste(holidays,collapse="|"), inc_date))
-
-num_fw <- sum(nrow(c_2010_allFw), nrow(c_2012_allFw), nrow(c_2014_allFw))
-num_fw_hol <- sum(nrow(c_2010_fwAtHolid), nrow(c_2012_fwAtHolid), nrow(c_2014_fwAtHolid))
-
-perc <- num_fw_hol / num_fw * 100
-
-total <- nrow(c_2010_allFw)
-holiday <- nrow(c_2010_fwAtHolid)
-Otos <- total - holiday
-
-vh <- c(holiday/total, Otos/total)
-
-barplot(vh,names.arg=c("festividades", "no festividades"))
-```
-<div>
-**Conclusión**: Que sea un día festivo no está relacionado con los incendios por fuegos artificiales, pues la proporción de incendios por fuegos artificiales es más alta durante los días no festivos.
-</div>
-
 ###Preguntas Inferenciales
 ####¿La mayoría de incendios ocurren en el día(6am-5pm)?
 H0: La mayoría de incendios no ocurren de día
