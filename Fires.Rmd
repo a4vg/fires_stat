@@ -37,7 +37,7 @@ Nuestra propuesta es analizar los incendios desde el 2010 hasta el 2014, estudia
     + Ordinal: General Cause Category,  Primary Cause Category
 * Cuantitativas:
     + Discretas: Exposure No., deaths
-    + Continua: Tiempo, alarm time, arrival time, property loss
+    + Continua: Tiempo, alarm time, arrival time
 
 ##Unidades muestrales
 * Población objetivo: Incendios reportados por el National Fire Incident Reporting System en el 2010, 2012 y 2014.
