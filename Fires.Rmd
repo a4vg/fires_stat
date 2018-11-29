@@ -356,8 +356,8 @@ barplot(vh,names.arg=c("CA", "TX", "NY", "VT", "WA", "WY"), main = "2014", col=c
 ###Preguntas Inferenciales
 ####¿La mayoría de incendios ocurren en el día(6am-5pm)?
 
-H0: La mayoría de incendios no ocurren de día
-H1: La mayoría de incendios ocurren de día
+H0: El 80% de incendios no ocurren en el día
+H1: El 80% de incendios ocurren en el día
 ```{r}
 dia2010 <- causes_2010[hour(causes_2010$alarm)<17 & hour(causes_2010$alarm)>6,]
 horas2010 <- hour(causes_2010$alarm)
