@@ -411,7 +411,7 @@ reject
 
 ###Preguntas Causales
 ####¿El factor más influyente de la provocaciones de incendios se debe a la actividad humana?
-
+Se agrupan los incendios por causas. Se investiga cuales de estas causas son provocadas por actividad humana, luego se procede a separar dichas causas y  evaluar las proporciones entre los dos grupos.
 
 ###Preguntas Predictivas
 ####¿Si se el número de estaciones de bomberos aumentan cuál sería el comportamiento del _exposure number_, y del número de incendios?
@@ -449,7 +449,7 @@ A partir de estos datos, se puede concluir que aproximadamente el 1% de la varia
 
 ###Preguntas Mecanísticas
 ####¿Cómo afectan las estaciones a la provocación de incendios?
-Primero se separan las cantidades de incendios por fechas de las 4 estaciones. Luego  se  hace una grafica comparando  la cantidad de  incendios de cada uno.
+Primero se separan las cantidades de incendios por fechas de las 4 estaciones. Luego  se  hace una gráfica comparando la preporción y la cantidad de incendios de cada uno.
 
 
 ##Bibliografía adicional
