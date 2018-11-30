@@ -354,33 +354,58 @@ barplot(vh,names.arg=c("CA", "TX", "NY", "VT", "WA", "WY"), main = "2014", col=c
 </div>
 
 ###Preguntas Inferenciales
-####¿La mayoría de incendios ocurren en el día(6am-5pm)?
+####¿La mayoría de incendios ocurren a  las 12pm?
 
-H0: El promedio de la hora de los incendios es mayor a 2pm
-H1: El promedio de la hora de los incendios es menor a 2pm
+H0: El promedio de la hora es a  las 12pm  
+H1: El promedio de la hora no es a las 12pm  
 ```{r}
-dia2010 <- causes_2010[hour(causes_2010$alarm)<17 & hour(causes_2010$alarm)>6,]
 horas2010 <- hour(causes_2010$alarm)
-mu2010 <- mean(horas2010)
 
-dia2012 <- causes_2012[hour(causes_2012$alarm)<17 & hour(causes_2012$alarm)>6,]
 horas2012 <- hour(causes_2012$alarm)
-mu2012 <- mean(horas2012)
 
-dia2014 <- causes_2014[hour(causes_2014$alarm)<17 & hour(causes_2014$alarm)>6,]
 horas2014 <- hour(causes_2014$alarm)
-mu2014 <- mean(horas2014)
 
-mu_total <- (mu2010+mu2012+mu2014)/3
-total_anos <- c(causes_2010,causes_2012,causes_2014)
-total_horas <- hour(total_anos$alarm)
-v <- c(0:23)
+total_horas <- c(horas2010, horas2012, horas2014)
 
-t.test(total_horas, mu=mu_total, alternative="greater", conf.level=0.80)
+alfa <- 1-0.95
+
+test <- t.test(total_horas, mu=12, alternative="two.sided", conf.level=0.95)
+test
+```
+Se rechaza H0? 
+```{r}
+reject <- test$p.value < alfa
+reject
 ```
 
 <div>
-*Conclusión*: Se rechaza la hipótesis nula, ya que p-value vale 0.155 y nuestro alfa es 0.2. Podemos ver que p-value es menor.
+*Conclusión*: Se rechaza la hipótesis nula, ya que p-value vale 2.2e-16 y nuestro alfa es 0.05. Podemos ver que p-value es menor y que el pronedio de los incendios  es a las 1:40 aproximadamente.
+</div>
+
+####¿El tiempo de respuesta de los bomberos es menos o 15 minutos?
+H0 = El tiempo de respuesta es < 15  
+H1 = El tiempo de respuesta es > 15  
+```{r}
+arrival2010 <- as.numeric(c(difftime(g_2010$arrival, g_2010$alarm, units='mins')))
+mu2010  <- mean(arrival2010, na.rm = TRUE)
+arrival2012 <- as.numeric(difftime(g_2012$arrival, g_2012$alarm, units='mins'))
+mu2012 <- mean(arrival2012, na.rm = TRUE)
+arrival2014 <- as.numeric(difftime(g_2014$arrival, g_2014$alarm, units='mins'))
+mu2014 <- mean(arrival2014, na.rm = TRUE)
+arrivalt <- c(arrival2010, arrival2012, arrival2014)
+mut <- (mu2010+mu2012+mu2014)/3
+alfa <-  1-0.95
+test <- t.test(arrivalt, alternative = "greater", mu = 15, conf.level = 0.95)
+test
+```
+Se rechaza H0? 
+```{r}
+reject <- test$p.value < alfa
+reject
+```
+
+<div>
+*Conclusión*: Se rechaza la hipotesis nula, ya que p-value vale 1.011e-05 y nuestro alfa es 0.05. Podemos ver que p-value es menor  y la verdadera media es 17.27185
 </div>
 
 ###Preguntas Causales
@@ -392,6 +417,7 @@ Para responder esto, es necesario hacer una regresión lineal entre el número d
 
 ###Preguntas Mecanísticas
 ####¿Cómo afectan las estaciones a la provocación de incendios?
+Primero se separan las cantidades de incendios por fechas de las 4 estaciones. 
 
 
 ##Bibliografía adicional
