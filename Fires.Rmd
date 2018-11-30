@@ -397,8 +397,7 @@ $H_0$ = El tiempo de respuesta es <= 15
 $H_1$ = El tiempo de respuesta es > 15  
 ```{r}
 arrival2010 <- as.numeric(c(difftime(causes_2010$arrival, causes_2010$alarm, units='mins')))
-mu2010  <- mean(arrival2010)
-mu2010
+
 arrival2012 <- as.numeric(difftime(causes_2012$arrival, causes_2012$alarm, units='mins'))
 
 arrival2014 <- as.numeric(difftime(causes_2014$arrival, causes_2014$alarm, units='mins'))
