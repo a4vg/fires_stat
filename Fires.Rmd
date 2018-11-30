@@ -437,9 +437,9 @@ df_stations_exp <- df_stations_exp[order(df_stations_exp$n_stations), ]
 stations_vs_exp_model <- lm(mean_of_exp_no ~ n_stations, data = df_stations_exp)
 
 plot(df_stations_exp$n_stations, df_stations_exp$mean_of_exp_no,
-     main="Daño colateral en función del número de estaciones de bombero",
-     xlab="Número de estaciones de bombero en cada estado",
-     ylab="Media de número de incendios colaterales")
+     main="Dano colateral en funcion del numero de estaciones de bombero",
+     xlab="Numero de estaciones de bombero en cada estado",
+     ylab="Media de numero de incendios colaterales")
 abline(stations_vs_exp_model, col = "red")
 ```
 
