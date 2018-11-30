@@ -95,21 +95,13 @@ Significados de cada Cause Code encontrado en la base de datos:
 ##Preguntas de investigación
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-formatdate <- function(filename, isGenIn=F){
+formatdate <- function(filename, dateConversion=T){
   thefile <- read.csv(filename, stringsAsFactors = F)
   thefile <- thefile[rowSums(is.na(thefile)) == 0,]
-  thefile$inc_date[nchar(thefile$inc_date)==7] <-paste("0", thefile$inc_date[nchar(thefile$inc_date)==7], sep="")
-  thefile$inc_date <- as.Date(thefile$inc_date, format = "%m%d%Y") # as.Date used for dates
-
-  if (isGenIn){
-    thefile$alarm[nchar(thefile$alarm)==11] <-paste("0", thefile$alarm[nchar(thefile$alarm)==11],sep="")
-    thefile$alarm <- as.POSIXct(thefile$alarm, format = "%m%d%Y%H%M") # as.POSIXct used for datetimes
-
-    thefile$arrival[nchar(thefile$arrival)==11] <-paste("0", thefile$arrival[nchar(thefile$arrival)==11],sep="")
-    thefile$arrival <- as.POSIXct(thefile$arrival, format = "%m%d%Y%H%M")
-
-    thefile$lu_clear[nchar(thefile$lu_clear)==11] <-paste("0", thefile$lu_clear[nchar(thefile$lu_clear)==11],sep="")
-    thefile$lu_clear <- as.POSIXct(thefile$lu_clear, format = "%m%d%Y%H%M")
+  
+  if (dateConversion){
+    thefile$inc_date[nchar(thefile$inc_date)==7] <-paste("0", thefile$inc_date[nchar(thefile$inc_date)==7], sep="")
+    thefile$inc_date <- as.Date(thefile$inc_date, format = "%m%d%Y") # as.Date used for dates
   }
   
   return(thefile)
@@ -119,9 +111,9 @@ formatdate <- function(filename, isGenIn=F){
 c_2010 <- formatdate(file="data/Causes2010_cleaned.csv")
 c_2012 <- formatdate(file="data/Causes2012_cleaned.csv")
 c_2014 <- formatdate(file="data/Causes2014_cleaned.csv")
-g_2010 <- read.csv(file="data/GenIn2010_gourmet.csv", T)
-g_2012 <- read.csv(file="data/GenIn2012_gourmet.csv", T)
-g_2014 <- read.csv(file="data/GenIn2014_gourmet.csv", T)
+g_2010 <- formatdate(file="data/GenIn2010_gourmet.csv", F)
+g_2012 <- formatdate(file="data/GenIn2012_gourmet.csv", F)
+g_2014 <- formatdate(file="data/GenIn2014_gourmet.csv", F)
 causes_2010 <- merge(c_2010, g_2010) #by= c("fdid", "exp_no", "inc_no"))
 causes_2012 <- merge(c_2012, g_2012) #by= c("fdid", "exp_no", "inc_no"))
 causes_2014 <- merge(c_2014, g_2014) #by= c("fdid", "exp_no", "inc_no"))
@@ -145,7 +137,18 @@ causes[14] <- "Equipment Misoperation / Failure"
 causes[15] <- "Other Unintentional / Careless"
 causes[16] <- "Investigation with Arson Module"
 
+states_def <- read.csv("data/states_def.csv")
+
 ```
+
+
+
+```{r}
+ 
+sum(rowSums(is.na(c_2010)))
+```
+
+
 
 ###Preguntas descriptivas
 
