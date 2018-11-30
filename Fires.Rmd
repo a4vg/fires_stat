@@ -412,6 +412,7 @@ reject
 ###Preguntas Causales
 ####¿El factor más influyente de la provocaciones de incendios se debe a la actividad humana?
 
+
 ###Preguntas Predictivas
 ####¿Si se el número de estaciones de bomberos aumentan cuál sería el comportamiento del _exposure number_, y del número de incendios?
 Para responder esto, es necesario hacer una regresión lineal entre el número de estaciones de bomberos y el comportamiento de _exposure number_. Recordar que _exposure number_ representa el número de incendios B, C, D,... ocasionados como daño colateral de un incendio original A. En el modelo lineal, _exposure number_ sería la variable respuesta y el número de estaciones de bomberos la variable predictora. Si la función linear resultara de pendiente negativa, se observaría que el aumento de estaciones de bomberos ocasiona una reducción de los incendios por daño colateral.
@@ -448,7 +449,7 @@ A partir de estos datos, se puede concluir que aproximadamente el 1% de la varia
 
 ###Preguntas Mecanísticas
 ####¿Cómo afectan las estaciones a la provocación de incendios?
-Primero se separan las cantidades de incendios por fechas de las 4 estaciones. 
+Primero se separan las cantidades de incendios por fechas de las 4 estaciones. Luego  se  hace una grafica comparando  la cantidad de  incendios de cada uno.
 
 
 ##Bibliografía adicional
