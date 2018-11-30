@@ -72,25 +72,24 @@ Los datos serán recolectados del repositorio de datos [Enigma Public](https://p
 Cada causa tiene un Primary Cause Category y un Cause Code, que son números enteros. El significado de cada uno de estos códigos puede ser extraído de la [documentación](https://www.usfa.fema.gov/data/nfirs/support/documentation.html) de la web del National Fire Incident Reporting System en la sección **Structure Fire Cause Matrix**
 
 Significados de cada Cause Code encontrado en la base de datos:
-<ol>
-<li>Intentional</li>
-<li>Playing with Heat Source</li>
-<li>Smoking</li>
-<li>Heating</li>
-<li>Cooking</li>
-<li>Electrical Malfunction</li>
-<li>Appliances</li>
-<li>Open Flame</li>
-<li>Other Heat</li>
-<li>Other Equipment</li>
-<li>Natural</li>
-<li>Exposure</li>
-<li>Unknown</li>
-<li>Equipment Misoperation / Failure</li>
-<li>Other Unintentional / Careless</li>
-<li>Investigation with Arson Module</li>
-</ol>
-</div>
+* Intentional
+* Playing with Heat Source
+* Smoking
+* Heating
+* Cooking
+* Electrical Malfunction
+* Appliances
+* Open Flame
+* Other Heat
+* Other Equipment
+* Natural
+* Exposure
+* Unknown
+* Equipment Misoperation / Failure
+* Other Unintentional / Careless
+* Investigation with Arson Module
+
+
 
 ##Preguntas de investigación
 
@@ -136,8 +135,6 @@ causes[13] <- "Unknown"
 causes[14] <- "Equipment Misoperation / Failure"
 causes[15] <- "Other Unintentional / Careless"
 causes[16] <- "Investigation with Arson Module"
-
-states_def <- read.csv("data/states_def.csv")
 
 ```
 
@@ -396,13 +393,14 @@ H0 = El tiempo de respuesta es < 15
 H1 = El tiempo de respuesta es > 15  
 ```{r}
 arrival2010 <- as.numeric(c(difftime(g_2010$arrival, g_2010$alarm, units='mins')))
-mu2010  <- mean(arrival2010, na.rm = TRUE)
+mu2010  <- mean(arrival2010)
+mu2010
 arrival2012 <- as.numeric(difftime(g_2012$arrival, g_2012$alarm, units='mins'))
-mu2012 <- mean(arrival2012, na.rm = TRUE)
+
 arrival2014 <- as.numeric(difftime(g_2014$arrival, g_2014$alarm, units='mins'))
-mu2014 <- mean(arrival2014, na.rm = TRUE)
+
 arrivalt <- c(arrival2010, arrival2012, arrival2014)
-mut <- (mu2010+mu2012+mu2014)/3
+
 alfa <-  1-0.95
 test <- t.test(arrivalt, alternative = "greater", mu = 15, conf.level = 0.95)
 test
@@ -414,7 +412,7 @@ reject
 ```
 
 <div>
-*Conclusión*: Se rechaza la hipotesis nula, ya que p-value vale 1.011e-05 y nuestro alfa es 0.05. Podemos ver que p-value es menor y la verdadera media es 17.27185. Lo que significa que el tiempo de respuesta es un poco más de 17 minutos.
+*Conclusión*: Se rechaza la hipotesis nula, ya que p-value vale 0.01259 y nuestro alfa es 0.05. Podemos ver que p-value es menor y la verdadera media es 17.27185. Lo que significa que el tiempo de respuesta es un poco más de 17 minutos.
 </div>
 
 ###Preguntas Causales
