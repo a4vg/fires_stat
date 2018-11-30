@@ -272,7 +272,8 @@ WY1 <- WY$freq
 
 vh <- c(CA1/CAT1,TX1/TXT1,NY1/NYT1,VT1/VTT1,WA1/WAT1,WY1/WYT1)
 
-barplot(vh,names.arg=c(states_def$State[states_def$Abbreviation=="CA"], states_def$State[states_def$Abbreviation=="TX"], states_def$State[states_def$Abbreviation=="NY"], states_def$State[states_def$Abbreviation=="VT"], states_def$State[states_def$Abbreviation=="WA"], states_def$State[states_def$Abbreviation=="WY"]) , main = "2014", col=c("orange", "orange", "orange", "darkturquoise", "darkturquoise", "darkturquoise"))
+par(cex=0.8)
+barplot(vh,names.arg=c(states_def$State[states_def$Abbreviation=="CA"], states_def$State[states_def$Abbreviation=="TX"], states_def$State[states_def$Abbreviation=="NY"], states_def$State[states_def$Abbreviation=="VT"], states_def$State[states_def$Abbreviation=="WA"], states_def$State[states_def$Abbreviation=="WY"]) , main = "2010", col=c("orange", "orange", "orange", "darkturquoise", "darkturquoise", "darkturquoise"))
 
 
 #Causes 2012 --------------------
@@ -311,7 +312,8 @@ WY1 <- WY$freq
 
 vh <- c(CA1/CAT1,TX1/TXT1,NY1/NYT1,VT1/VTT1,WA1/WAT1,WY1/WYT1)
 
-barplot(vh,names.arg=c(states_def$State[states_def$Abbreviation=="CA"], states_def$State[states_def$Abbreviation=="TX"], states_def$State[states_def$Abbreviation=="NY"], states_def$State[states_def$Abbreviation=="VT"], states_def$State[states_def$Abbreviation=="WA"], states_def$State[states_def$Abbreviation=="WY"]) , main = "2014", col=c("orange", "orange", "orange", "darkturquoise", "darkturquoise", "darkturquoise"))
+par(cex=0.8)
+barplot(vh,names.arg=c(states_def$State[states_def$Abbreviation=="CA"], states_def$State[states_def$Abbreviation=="TX"], states_def$State[states_def$Abbreviation=="NY"], states_def$State[states_def$Abbreviation=="VT"], states_def$State[states_def$Abbreviation=="WA"], states_def$State[states_def$Abbreviation=="WY"]) , main = "2012", col=c("orange", "orange", "orange", "darkturquoise", "darkturquoise", "darkturquoise"))
 
 
 #Causes 2014 --------------------
@@ -350,6 +352,7 @@ WY1 <- WY$freq
 
 vh <- c(CA1/CAT1,TX1/TXT1,NY1/NYT1,VT1/VTT1,WA1/WAT1,WY1/WYT1)
 
+par(cex=0.8)
 barplot(vh,names.arg=c(states_def$State[states_def$Abbreviation=="CA"], states_def$State[states_def$Abbreviation=="TX"], states_def$State[states_def$Abbreviation=="NY"], states_def$State[states_def$Abbreviation=="VT"], states_def$State[states_def$Abbreviation=="WA"], states_def$State[states_def$Abbreviation=="WY"]) , main = "2014", col=c("orange", "orange", "orange", "darkturquoise", "darkturquoise", "darkturquoise"))
 
 
