@@ -136,16 +136,9 @@ causes[14] <- "Equipment Misoperation / Failure"
 causes[15] <- "Other Unintentional / Careless"
 causes[16] <- "Investigation with Arson Module"
 
+states_def <- read.csv("data/states_def.csv", stringsAsFactors = F)
+
 ```
-
-
-
-```{r}
- 
-sum(rowSums(is.na(c_2010)))
-```
-
-
 
 ###Preguntas descriptivas
 
@@ -273,7 +266,7 @@ WY1 <- WY$freq
 
 vh <- c(CA1/CAT1,TX1/TXT1,NY1/NYT1,VT1/VTT1,WA1/WAT1,WY1/WYT1)
 
-barplot(vh,names.arg=c("CA", "TX", "NY", "VT", "WA", "WY"), main = "2010", col=c("orange", "orange", "orange", "darkturquoise", "darkturquoise", "darkturquoise"))
+barplot(vh,names.arg=c(states_def$State[states_def$Abbreviation=="CA"], states_def$State[states_def$Abbreviation=="TX"], states_def$State[states_def$Abbreviation=="NY"], states_def$State[states_def$Abbreviation=="VT"], states_def$State[states_def$Abbreviation=="WA"], states_def$State[states_def$Abbreviation=="WY"]) , main = "2014", col=c("orange", "orange", "orange", "darkturquoise", "darkturquoise", "darkturquoise"))
 
 
 #Causes 2012 --------------------
@@ -312,7 +305,7 @@ WY1 <- WY$freq
 
 vh <- c(CA1/CAT1,TX1/TXT1,NY1/NYT1,VT1/VTT1,WA1/WAT1,WY1/WYT1)
 
-barplot(vh,names.arg=c("CA", "TX", "NY", "VT", "WA", "WY"), main = "2012", col=c("orange", "orange", "orange", "darkturquoise", "darkturquoise", "darkturquoise"))
+barplot(vh,names.arg=c(states_def$State[states_def$Abbreviation=="CA"], states_def$State[states_def$Abbreviation=="TX"], states_def$State[states_def$Abbreviation=="NY"], states_def$State[states_def$Abbreviation=="VT"], states_def$State[states_def$Abbreviation=="WA"], states_def$State[states_def$Abbreviation=="WY"]) , main = "2014", col=c("orange", "orange", "orange", "darkturquoise", "darkturquoise", "darkturquoise"))
 
 
 #Causes 2014 --------------------
@@ -351,14 +344,13 @@ WY1 <- WY$freq
 
 vh <- c(CA1/CAT1,TX1/TXT1,NY1/NYT1,VT1/VTT1,WA1/WAT1,WY1/WYT1)
 
-barplot(vh,names.arg=c("CA", "TX", "NY", "VT", "WA", "WY"), main = "2014", col=c("orange", "orange", "orange", "darkturquoise", "darkturquoise", "darkturquoise"))
+barplot(vh,names.arg=c(states_def$State[states_def$Abbreviation=="CA"], states_def$State[states_def$Abbreviation=="TX"], states_def$State[states_def$Abbreviation=="NY"], states_def$State[states_def$Abbreviation=="VT"], states_def$State[states_def$Abbreviation=="WA"], states_def$State[states_def$Abbreviation=="WY"]) , main = "2014", col=c("orange", "orange", "orange", "darkturquoise", "darkturquoise", "darkturquoise"))
 
 
 ```
 
 
 En los años 2010 y 2012 la diferencia no es muy amplia. Sin embargo, esta sí es visible especialmente entre Wyoming y California. En el año 2014 podemos notar un cambio más grande. Por eso, podemos decir que la población sí está relacionada con el índice de incendios por humo y que en los estados con menos ciudadanos ocurren más incendios de este tipo.
-
 ###Preguntas Inferenciales
 ####¿La mayoría de incendios ocurren a  las 12pm?
 
@@ -392,12 +384,12 @@ reject
 H0 = El tiempo de respuesta es < 15  
 H1 = El tiempo de respuesta es > 15  
 ```{r}
-arrival2010 <- as.numeric(c(difftime(g_2010$arrival, g_2010$alarm, units='mins')))
+arrival2010 <- as.numeric(c(difftime(causes_2010$arrival, causes_2010$alarm, units='mins')))
 mu2010  <- mean(arrival2010)
 mu2010
-arrival2012 <- as.numeric(difftime(g_2012$arrival, g_2012$alarm, units='mins'))
+arrival2012 <- as.numeric(difftime(causes_2012$arrival, causes_2012$alarm, units='mins'))
 
-arrival2014 <- as.numeric(difftime(g_2014$arrival, g_2014$alarm, units='mins'))
+arrival2014 <- as.numeric(difftime(causes_2014$arrival, causes_2014$alarm, units='mins'))
 
 arrivalt <- c(arrival2010, arrival2012, arrival2014)
 
@@ -412,7 +404,7 @@ reject
 ```
 
 <div>
-*Conclusión*: Se rechaza la hipotesis nula, ya que p-value vale 0.01259 y nuestro alfa es 0.05. Podemos ver que p-value es menor y la verdadera media es 17.27185. Lo que significa que el tiempo de respuesta es un poco más de 17 minutos.
+*Conclusión*: Se rechaza la hipotesis nula, ya que p-value vale 0.01272 y nuestro alfa es 0.05. Podemos ver que p-value es menor y la verdadera media es 17.27185. Lo que significa que el tiempo de respuesta es un poco más de 17 minutos.
 </div>
 
 ###Preguntas Causales
