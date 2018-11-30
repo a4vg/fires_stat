@@ -53,9 +53,10 @@ Las primeras semanas nos centraremos en el planteamiento inicial, es decir, la c
 ![En el diagrama de Gantt puede verse la planificación con mayor detalle.](img/Gantt.png)
 
 ##Fuente de datos
-<div style="text-align: justify">
+
 Los datos serán recolectados del repositorio de datos [Enigma Public](https://public.enigma.com/browse/77c6597b-eb82-4a2f-9d2e-5aedea1cae1d), específicamente de la sección National Fire Incident Reporting System - Causes, en donde se pueden encontrar tablas para cada año desde 2010 hasta 2014. Cada una de las tablas contiene información sobre los incendios ocurridos en ese año. Las columnas principales son:
-</div>
+
+
 
 * State: El estado donde ocurrió el incendio
 * Fire Dept. ID: El identificador del departamento de bomberos que atendió el incendio
@@ -67,11 +68,13 @@ Los datos serán recolectados del repositorio de datos [Enigma Public](https://p
 * General Cause Category
 
 
-<div style="text-align: justify">
+
 
 Cada causa tiene un Primary Cause Category y un Cause Code, que son números enteros. El significado de cada uno de estos códigos puede ser extraído de la [documentación](https://www.usfa.fema.gov/data/nfirs/support/documentation.html) de la web del National Fire Incident Reporting System en la sección **Structure Fire Cause Matrix**
 
 Significados de cada Cause Code encontrado en la base de datos:
+
+
 * Intentional
 * Playing with Heat Source
 * Smoking
@@ -370,7 +373,7 @@ alfa <- 1-0.95
 test <- t.test(total_horas, mu=12, alternative="two.sided", conf.level=0.95)
 test
 ```
-Se rechaza H0? 
+¿Se rechaza H0? 
 ```{r}
 reject <- test$p.value < alfa
 reject
