@@ -74,25 +74,24 @@ Cada causa tiene un Primary Cause Category y un Cause Code, que son números ent
 
 Significados de cada Cause Code encontrado en la base de datos:
 
-
-* Intentional
-* Playing with Heat Source
-* Smoking
-* Heating
-* Cooking
-* Electrical Malfunction
-* Appliances
-* Open Flame
-* Other Heat
-* Other Equipment
-* Natural
-* Exposure
-* Unknown
-* Equipment Misoperation / Failure
-* Other Unintentional / Careless
-* Investigation with Arson Module
-
-
+<ol>
+<li>Intentional</li>
+<li>Playing with Heat Source</li>
+<li>Smoking</li>
+<li>Heating</li>
+<li>Cooking</li>
+<li>Electrical Malfunction</li>
+<li>Appliances</li>
+<li>Open Flame</li>
+<li>Other Heat</li>
+<li>Other Equipment</li>
+<li>Natural</li>
+<li>Exposure</li>
+<li>Unknown</li>
+<li>Equipment Misoperation / Failure</li>
+<li>Other Unintentional / Careless</li>
+<li>Investigation with Arson Module</li>
+</ol>
 
 ##Preguntas de investigación
 
@@ -171,6 +170,7 @@ Del gráfico anterior se concluye claramente que aproximadamente en el 40% de lo
 </div>
 
 ####¿Cuál es el mes con menos incendios por año?
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(lubridate)
 library(rmarkdown)
@@ -203,6 +203,7 @@ Podemos ver que en el año 2010 y 2012, febrero fue el mes con menos incendios. 
 </div>
 
 ####¿Cuál es la causa más común que ocasionan los incendios por estado en el año 2010?
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
 library(dplyr)
@@ -228,7 +229,9 @@ En general podemos ver que la mayoría de los estados tienen como la causa más 
 </div>
 
 ###Preguntas exploratorias
+
 #### ¿La población de las ciudades está relacionada con el índice de incendios por humo?
+
 Se tomaron los 3 estados más poblados(naranja) y los 3 estados menos poblados(azul). Información disponible [aquí](https://es.wikipedia.org/wiki/Anexo:Estados_de_los_Estados_Unidos_por_poblaci%C3%B3n).
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(plyr)
@@ -354,11 +357,13 @@ barplot(vh,names.arg=c(states_def$State[states_def$Abbreviation=="CA"], states_d
 
 
 En los años 2010 y 2012 la diferencia no es muy amplia. Sin embargo, esta sí es visible especialmente entre Wyoming y California. En el año 2014 podemos notar un cambio más grande. Por eso, podemos decir que la población sí está relacionada con el índice de incendios por humo y que en los estados con menos ciudadanos ocurren más incendios de este tipo.
-###Preguntas Inferenciales
-####¿La mayoría de incendios ocurren a  las 12pm?
 
-H0: El promedio de la hora es a  las 12pm  
-H1: El promedio de la hora no es a las 12pm  
+###Preguntas Inferenciales
+
+####¿En promedio, los incendios ocurren a las 12pm?
+
+$H_0$: El promedio de la hora es a  las 12pm  
+$H_1$: El promedio de la hora no es a las 12pm  
 ```{r}
 horas2010 <- hour(causes_2010$alarm)
 
@@ -380,12 +385,13 @@ reject
 ```
 
 <div>
-*Conclusión*: Se rechaza la hipótesis nula, ya que p-value vale 2.2e-16 y nuestro alfa es 0.05. Podemos ver que p-value es menor y que el pronedio de los incendios es a la 1:40 aproximadamente.
+*Conclusión*: Se rechaza la hipótesis nula, ya que p-value vale 2.2e-16 y nuestro alfa es 0.05. Podemos ver que p-value es menor. Entonces, los incendios en promedio no ocurren a las 12pm.
 </div>
 
-####¿El tiempo de respuesta de los bomberos es menos o 15 minutos?
-H0 = El tiempo de respuesta es < 15  
-H1 = El tiempo de respuesta es > 15  
+####¿El tiempo de respuesta de los bomberos es de 15 minutos o menos?
+
+$H_0$ = El tiempo de respuesta es <= 15  
+$H_1$ = El tiempo de respuesta es > 15  
 ```{r}
 arrival2010 <- as.numeric(c(difftime(causes_2010$arrival, causes_2010$alarm, units='mins')))
 mu2010  <- mean(arrival2010)
@@ -407,15 +413,13 @@ reject
 ```
 
 <div>
-*Conclusión*: Se rechaza la hipotesis nula, ya que p-value vale 0.01272 y nuestro alfa es 0.05. Podemos ver que p-value es menor y la verdadera media es 17.27185. Lo que significa que el tiempo de respuesta es un poco más de 17 minutos.
+*Conclusión*: Se rechaza la hipotesis nula, ya que p-value vale 0.01272 y nuestro alfa es 0.05. Podemos ver que p-value es menor. Por lo tanto, el tiempo de respuesta de los bomberos es mayor a 15min.
 </div>
 
-###Preguntas Causales
-####¿El factor más influyente de la provocaciones de incendios se debe a la actividad humana?
-Se agrupan los incendios por causas. Se investiga cuales de estas causas son provocadas por actividad humana, luego se procede a separar dichas causas y  evaluar las proporciones entre los dos grupos.
-
 ###Preguntas Predictivas
+
 ####¿Si se el número de estaciones de bomberos aumentan cuál sería el comportamiento del _exposure number_, y del número de incendios?
+
 Para responder esto, es necesario hacer una regresión lineal entre el número de estaciones de bomberos y el comportamiento de _exposure number_. Recordar que _exposure number_ representa el número de incendios B, C, D,... ocasionados como daño colateral de un incendio original A. En el modelo lineal, _exposure number_ sería la variable respuesta y el número de estaciones de bomberos la variable predictora. Si la función linear resultara de pendiente negativa, se observaría que el aumento de estaciones de bomberos ocasiona una reducción de los incendios por daño colateral.
 
 ```{r}
@@ -448,8 +452,16 @@ cat("Coeficiente de correlación:", sqrt(smry$r.squared),"\n")
 
 A partir de estos datos, se puede concluir que aproximadamente el 1% de la variabilidad del daño colateral se explica con el número de estaciones de bomberos. Además, la asociación entre estas dos variables es inversa pero no es para nada fuerte. Por lo tanto, a pesar de que existe una relación lineal entre las dos variables, es claro que en número de estaciones de bomberos no es el mejor parámetro para predecir el número de incendios ocasionados por un daño colateral, con excepción del 1% de las veces.
 
+###Preguntas Causales
+
+####¿El factor más influyente de la provocaciones de incendios se debe a la actividad humana?
+
+Se agrupan los incendios por causas. Se investiga cuales de estas causas son provocadas por actividad humana, luego se procede a separar dichas causas y  evaluar las proporciones entre los dos grupos.
+
 ###Preguntas Mecanísticas
+
 ####¿Cómo afectan las estaciones a la provocación de incendios?
+
 Primero se separan las cantidades de incendios por fechas de las 4 estaciones. Luego  se hace una gráfica comparando la preporción y la cantidad de incendios de cada uno.
 
 
